@@ -1,0 +1,141 @@
+# PM Tool — Collaborative Project Management Platform
+
+A full-stack project management web app (Trello/Asana-style) built with the **MERN stack** (MongoDB, Express, React, Node.js) and **Socket.io** for real-time collaboration.
+
+Users can register, create projects, invite teammates, organize work on Kanban boards, assign and comment on tasks — with changes syncing live across everyone's screen.
+
+---
+
+##  Features
+
+### Core (fully functional, connected to a real database)
+- **Authentication** — JWT-based register/login, protected routes
+- **Projects** — create projects, invite members by email, per-project Kanban columns
+- **Kanban board** — drag-and-drop tasks between columns, updates saved to the database and broadcast live via Socket.io
+- **Tasks** — title, description, priority, due date, assignees, created directly from the board or from the Tasks/Kanban/Calendar pages
+- **Comments** — real-time task comments with typing indicators
+- **Notifications** — task assignments, comments, and project invites, delivered live
+- **Global Tasks view** — every task across every project, searchable, sortable, filterable
+- **Global Kanban view** — cross-project board with real drag-and-drop
+- **Calendar** — real task due dates plotted on a month grid; "Add Event" creates a real task
+- **Team page** — real member list aggregated across projects, with Owner/Member roles derived from actual project ownership
+- **Reports** — real stats (completed/overdue/total tasks, per-project completion, per-member performance) plus a couple of illustrative trend charts (clearly labeled, since the backend doesn't store historical snapshots)
+- **Project Overview page** — per-project summary: progress, details, recent tasks, team
+
+### Marketing site
+- Landing page, Login, and Register pages with a dark/glassmorphism visual theme, animations, and a dashboard mockup
+
+### UI-only pages (not wired to a backend — flagged clearly in the app)
+- **Messages** — a fully designed chat UI with local-only demo conversations. There's no chat backend (no Message model, no socket events for DMs) yet, so nothing here is saved or sent to other users.
+- **Settings** — general settings form and preference toggles work locally in the browser but don't persist to the database (no settings storage on the backend yet). The Account Information panel *does* show your real logged-in name and email.
+
+---
+
+##  Tech Stack
+
+**Backend:** Node.js, Express, MongoDB + Mongoose, JWT, bcryptjs, Socket.io
+**Frontend:** React (Vite), React Router, Tailwind CSS, Axios, socket.io-client, Recharts
+
+---
+
+## 📁 Folder Structure
+
+```
+pm-tool/
+├── backend/
+│   ├── server.js            # Express + Socket.io entry point
+│   ├── config/db.js         # MongoDB connection
+│   ├── models/               # User, Project, Task, Comment, Notification
+│   ├── middleware/auth.js    # JWT verification
+│   ├── routes/                # authRoutes, projectRoutes, taskRoutes, commentRoutes, notificationRoutes
+│   └── sockets/index.js       # Real-time event handling
+│
+└── frontend/
+    └── src/
+        ├── api/axios.js               # Axios instance with auth token interceptor
+        ├── context/                    # AuthContext, SocketContext
+        ├── components/                 # Sidebar, AppTopbar, ConicDonut, TaskCard, modals, etc.
+        └── pages/
+            ├── LandingPage.jsx          # Public marketing page
+            ├── Login.jsx / Register.jsx
+            ├── Dashboard.jsx            # Overview (stats, projects, activity)
+            ├── ProjectsPage.jsx         # All projects grid
+            ├── ProjectBoard.jsx         # Per-project Kanban board (drag & drop)
+            ├── ProjectOverviewPage.jsx  # Per-project detail/summary page
+            ├── TasksPage.jsx            # Cross-project task list
+            ├── KanbanPage.jsx           # Cross-project Kanban board
+            ├── CalendarPage.jsx         # Month calendar of real task due dates
+            ├── TeamPage.jsx             # Aggregated team members
+            ├── ReportsPage.jsx          # Analytics & charts
+            ├── MessagesPage.jsx         # UI-only chat mockup
+            └── SettingsPage.jsx         # Account info + local-only preferences
+```
+
+---
+
+##  Setup
+
+### 1. Backend
+
+```bash
+cd backend
+npm install
+cp .env.example .env
+```
+
+Fill in `.env`:
+```
+PORT=5000
+MONGO_URI=mongodb+srv://<user>:<pass>@cluster0.mongodb.net/pm-tool
+JWT_SECRET=some_long_random_string
+CLIENT_URL=http://localhost:5173
+```
+
+```bash
+npm run dev
+```
+Server runs on `http://localhost:5000`.
+
+### 2. Frontend
+
+```bash
+cd frontend
+npm install
+cp .env.example .env
+npm run dev
+```
+App runs on `http://localhost:5173`.
+
+> The frontend depends on `recharts` for the Reports page charts — it's already listed in `package.json`, so a normal `npm install` picks it up.
+
+---
+
+##  How to Use
+
+1. Register an account (or log in).
+2. From **Overview** or **Projects**, click **+ Create Project**.
+3. Open a project to reach its Kanban board — add tasks per column, drag them between columns, click a task to add a description, priority, assignees, and comments.
+4. Use the sidebar to explore **Tasks**, **Kanban**, **Calendar**, **Team**, and **Reports** — these all reflect your real projects and tasks.
+5. Open the same account in a second browser tab to see real-time updates (new tasks, drags, comments, notifications) sync instantly.
+
+---
+
+##  Security Notes
+
+- Passwords are hashed with bcrypt — never stored in plain text.
+- All protected API routes and Socket.io connections require a valid JWT.
+- Only a project's owner can delete it, add members, or edit its columns; only a comment's author can delete their own comment.
+
+---
+
+## Known Limitations (good "next steps" to mention if asked)
+
+- No real chat backend yet (Messages page is a UI mockup).
+- No settings persistence yet (Settings page preferences are local-only).
+- No file attachments on tasks/comments.
+- No task due-date email/push reminders.
+- Reports' trend charts are illustrative since there's no historical activity log stored yet.
+
+---
+
+© 2026 PM Tool. Built as an internship project.
