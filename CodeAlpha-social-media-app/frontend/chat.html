@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages - CodeAlpha</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-share-nodes"></i>
+        </div>
+        <span>CodeAlpha</span>
+      </a>
+    </div>
+
+    <div class="nav-right">
+      <div class="user-dropdown">
+        <button class="nav-icon-btn" id="notifBtn" title="Notifications">
+          <i class="fa-regular fa-bell"></i>
+          <span class="dot-badge" id="notifDot" style="display:none;"></span>
+        </button>
+        <div class="dropdown-menu notif-dropdown" id="notifDropdownMenu">
+          <div class="dropdown-header" style="display:flex; align-items:center; justify-content:space-between;">
+            <span class="font-bold">Notifications</span>
+            <span class="text-xs text-accent" id="markAllReadBtn" style="cursor:pointer;">Mark all read</span>
+          </div>
+          <div id="notifList" class="notif-list">
+            <div class="notif-empty">No notifications yet</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="nav-icon-btn" id="themeToggleBtn" title="Toggle Dark Mode">
+        <i class="fa-regular fa-moon"></i>
+      </button>
+
+      <div class="user-dropdown">
+        <button class="profile-trigger" id="profileDropdownBtn">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar" class="avatar avatar-sm current-user-avatar">
+          <i class="fa-solid fa-chevron-down text-xs text-muted"></i>
+        </button>
+        <div class="dropdown-menu" id="profileDropdownMenu">
+          <div class="dropdown-header">
+            <div class="font-bold current-user-name">Sarah Jenkins</div>
+            <div class="text-xs text-muted current-user-handle">@sarahj</div>
+          </div>
+          <a href="profile.html" class="dropdown-item">
+            <i class="fa-regular fa-user"></i> View Profile
+          </a>
+          <a href="create-post.html" class="dropdown-item">
+            <i class="fa-regular fa-pen-to-square"></i> New Post
+          </a>
+          <a href="#" class="dropdown-item" id="menuToggleDark">
+            <i class="fa-regular fa-moon"></i> Switch Theme
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item text-muted" id="logoutBtn">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Chat Page Container -->
+  <div class="app-container two-col">
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Home</span>
+        </a>
+        <a href="explore.html" class="nav-link" id="navExplore">
+          <i class="fa-regular fa-compass"></i>
+          <span>Explore</span>
+        </a>
+        <a href="notifications.html" class="nav-link" id="navNotifications">
+          <i class="fa-regular fa-bell"></i>
+          <span>Notifications</span>
+        </a>
+        <a href="chat.html" class="nav-link active" id="navMessages">
+          <i class="fa-regular fa-envelope"></i>
+          <span>Messages</span>
+        </a>
+        <a href="profile.html" class="nav-link">
+          <i class="fa-regular fa-user"></i>
+          <span>Profile</span>
+        </a>
+        <a href="saved.html" class="nav-link" id="navSaved">
+          <i class="fa-regular fa-bookmark"></i>
+          <span>Saved</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-user">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="User" class="avatar avatar-sm current-user-avatar">
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name current-user-name">Sarah Jenkins</div>
+          <div class="sidebar-user-handle current-user-handle">@sarahj</div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="chat-layout">
+
+      <!-- Conversations Sidebar -->
+      <aside class="chat-sidebar" id="chatSidebar">
+        <div class="chat-sidebar-header" style="display:flex; align-items:center; justify-content:space-between;">
+          <span>Messages</span>
+          <button class="nav-icon-btn" id="newChatBtn" title="New message" style="width:32px; height:32px;">
+            <i class="fa-solid fa-square-pen"></i>
+          </button>
+        </div>
+
+        <div class="chat-search">
+          <input type="text" id="chatSearchInput" placeholder="Search people to message...">
+        </div>
+
+        <!-- Search results (for starting a new conversation) -->
+        <div class="conversation-list" id="userSearchResults" style="display:none;"></div>
+
+        <!-- Existing conversations -->
+        <div class="conversation-list" id="conversationList">
+          <div class="notif-empty">Loading conversations...</div>
+        </div>
+      </aside>
+
+      <!-- Active Conversation -->
+      <main class="chat-main hide-mobile" id="chatMain">
+        <div class="chat-empty-state" id="chatEmptyState">
+          <i class="fa-regular fa-paper-plane"></i>
+          <div>Select a conversation to start chatting</div>
+        </div>
+
+        <!-- Populated once a conversation is opened -->
+        <div id="chatActiveView" style="display:none; flex-direction:column; height:100%;">
+          <div class="chat-header">
+            <button class="nav-icon-btn" id="chatBackBtn" style="display:none; width:32px; height:32px;">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <div class="conversation-avatar-wrap">
+              <img id="chatHeaderAvatar" src="" alt="" class="avatar avatar-sm">
+              <span class="online-dot" id="chatHeaderOnlineDot"></span>
+            </div>
+            <div>
+              <div class="chat-header-name" id="chatHeaderName">—</div>
+              <div class="chat-header-status" id="chatHeaderStatus">Offline</div>
+            </div>
+          </div>
+
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="typing-indicator" id="typingIndicator" style="display:none;">typing...</div>
+
+          <form class="chat-input-bar" id="chatInputForm">
+            <input type="text" id="chatMessageInput" placeholder="Type a message..." autocomplete="off">
+            <button type="submit" class="chat-send-btn" id="chatSendBtn">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/socket.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

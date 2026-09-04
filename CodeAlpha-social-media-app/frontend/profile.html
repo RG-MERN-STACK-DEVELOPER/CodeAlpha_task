@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile - CodeAlpha</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-share-nodes"></i>
+        </div>
+        <span>CodeAlpha</span>
+      </a>
+    </div>
+
+    <div class="nav-center">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Search people or posts...">
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <div class="user-dropdown">
+        <button class="nav-icon-btn" id="notifBtn" title="Notifications">
+          <i class="fa-regular fa-bell"></i>
+          <span class="dot-badge" id="notifDot" style="display:none;"></span>
+        </button>
+        <div class="dropdown-menu notif-dropdown" id="notifDropdownMenu">
+          <div class="dropdown-header" style="display:flex; align-items:center; justify-content:space-between;">
+            <span class="font-bold">Notifications</span>
+            <span class="text-xs text-accent" id="markAllReadBtn" style="cursor:pointer;">Mark all read</span>
+          </div>
+          <div id="notifList" class="notif-list">
+            <div class="notif-empty">No notifications yet</div>
+          </div>
+        </div>
+      </div>
+
+      <a href="chat.html" class="nav-icon-btn" id="msgBtn" title="Messages">
+        <i class="fa-regular fa-paper-plane"></i>
+        <span class="dot-badge" id="msgDot" style="display:none;"></span>
+      </a>
+
+      <button class="nav-icon-btn" id="themeToggleBtn" title="Toggle Dark Mode">
+        <i class="fa-regular fa-moon"></i>
+      </button>
+
+      <!-- Profile Avatar & Dropdown -->
+      <div class="user-dropdown">
+        <button class="profile-trigger" id="profileDropdownBtn">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar" class="avatar avatar-sm current-user-avatar">
+          <i class="fa-solid fa-chevron-down text-xs text-muted"></i>
+        </button>
+        <div class="dropdown-menu" id="profileDropdownMenu">
+          <div class="dropdown-header">
+            <div class="font-bold current-user-name">Sarah Jenkins</div>
+            <div class="text-xs text-muted current-user-handle">@sarahj</div>
+          </div>
+          <a href="profile.html" class="dropdown-item">
+            <i class="fa-regular fa-user"></i> View Profile
+          </a>
+          <a href="create-post.html" class="dropdown-item">
+            <i class="fa-regular fa-pen-to-square"></i> New Post
+          </a>
+          <a href="#" class="dropdown-item" id="menuToggleDark">
+            <i class="fa-regular fa-moon"></i> Switch Theme
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item text-muted" id="logoutBtn">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Layout Container -->
+  <div class="app-container">
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Home</span>
+        </a>
+        <a href="explore.html" class="nav-link" id="navExplore">
+          <i class="fa-regular fa-compass"></i>
+          <span>Explore</span>
+        </a>
+        <a href="notifications.html" class="nav-link" id="navNotifications">
+          <i class="fa-regular fa-bell"></i>
+          <span>Notifications</span>
+        </a>
+        <a href="chat.html" class="nav-link" id="navMessages">
+          <i class="fa-regular fa-envelope"></i>
+          <span>Messages</span>
+        </a>
+        <a href="profile.html" class="nav-link active">
+          <i class="fa-regular fa-user"></i>
+          <span>Profile</span>
+        </a>
+        <a href="saved.html" class="nav-link" id="navSaved">
+          <i class="fa-regular fa-bookmark"></i>
+          <span>Saved</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-user">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="User" class="avatar avatar-sm current-user-avatar">
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name current-user-name">Sarah Jenkins</div>
+          <div class="sidebar-user-handle current-user-handle">@sarahj</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Center Profile Main Area -->
+    <main class="feed-area" style="grid-column: span 2;">
+      
+      <!-- Profile Header Banner & Info Card -->
+      <div class="card profile-card">
+        <div class="profile-cover">
+          <img id="profileCoverImg" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200" alt="Profile Cover">
+        </div>
+
+        <div class="profile-header-content">
+          <div class="profile-avatar-row">
+            <img id="profileAvatarImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Profile Avatar" class="avatar avatar-xl">
+            <div>
+              <button class="btn btn-outline" id="editProfileModalBtn">
+                <i class="fa-regular fa-pen-to-square"></i> Edit Profile
+              </button>
+            </div>
+          </div>
+
+          <h2 id="profileFullName" style="font-size: 1.4rem; margin-bottom: 2px;">Sarah Jenkins</h2>
+          <div id="profileHandle" class="text-muted text-sm mb-3" style="margin-bottom: 12px;">@sarahj</div>
+
+          <p id="profileBioText" class="mb-3" style="font-size: 0.95rem; margin-bottom: 12px; color: var(--text-main);">
+            Senior Product Designer & Frontend Developer. Passionate about building minimal, elegant web interfaces and open-source tools. 🚀
+          </p>
+
+          <div class="d-flex gap-4 text-muted text-sm" style="display: flex; gap: 20px; font-size: 0.875rem; flex-wrap: wrap;">
+            <div><i class="fa-solid fa-location-dot text-accent"></i> <span id="profileLocationText">San Francisco, CA</span></div>
+            <div><i class="fa-solid fa-link text-accent"></i> <a href="#" id="profileWebsiteLink" target="_blank" class="text-accent">sarahjenkins.dev</a></div>
+            <div><i class="fa-regular fa-calendar text-accent"></i> Joined March 2024</div>
+          </div>
+
+          <!-- Profile Statistics Bar -->
+          <div class="profile-stats-bar">
+            <div class="stat-box">
+              <span class="stat-value" id="statPostsCount">24</span>
+              <span class="stat-label">Posts</span>
+            </div>
+            <div class="stat-box" id="followersStatBox" style="cursor: pointer;">
+              <span class="stat-value" id="statFollowersCount">2,480</span>
+              <span class="stat-label">Followers</span>
+            </div>
+            <div class="stat-box" id="followingStatBox" style="cursor: pointer;">
+              <span class="stat-value" id="statFollowingCount">486</span>
+              <span class="stat-label">Following</span>
+            </div>
+          </div>
+
+          <!-- Navigation Tabs -->
+          <div class="profile-tabs">
+            <button class="tab-btn active" data-tab="posts">Posts</button>
+            <button class="tab-btn" data-tab="replies">Replies</button>
+            <button class="tab-btn" data-tab="media">Media</button>
+            <button class="tab-btn" data-tab="likes">Likes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feed Container for Profile Posts -->
+      <div id="profilePostsContainer">
+        <!-- Rendered profile posts -->
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item">
+      <i class="fa-solid fa-house"></i>
+    </a>
+    <a href="create-post.html" class="bottom-nav-item text-accent">
+      <i class="fa-solid fa-square-plus" style="font-size: 1.5rem;"></i>
+    </a>
+    <a href="chat.html" class="bottom-nav-item">
+      <i class="fa-regular fa-paper-plane"></i>
+    </a>
+    <a href="profile.html" class="bottom-nav-item active">
+      <i class="fa-regular fa-user"></i>
+    </a>
+  </nav>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal-backdrop" id="editProfileModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 style="font-size: 1.1rem;">Edit Profile</h3>
+        <button class="remove-img-btn" id="closeEditModalBtn" style="position: static; width: 28px; height: 28px;">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <form id="editProfileForm">
+        <div class="modal-body">
+
+          <!-- Cover Image Change -->
+          <div class="form-group">
+            <label class="form-label">Cover Image</label>
+            <div style="position: relative; height: 100px; border-radius: 8px; overflow: hidden; margin-bottom: 8px;">
+              <img id="editCoverPreview" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200" style="width: 100%; height: 100%; object-fit: cover;">
+              <label for="editCoverInput" style="position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer; font-size: 0.9rem; font-weight: 600;">
+                <i class="fa-solid fa-camera mr-2"></i> Change Cover
+              </label>
+              <input type="file" id="editCoverInput" accept="image/*" style="display: none;">
+            </div>
+          </div>
+
+          <!-- Profile Avatar Change -->
+          <div class="form-group" style="display: flex; align-items: center; gap: 16px;">
+            <img id="editAvatarPreview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="avatar avatar-lg">
+            <div>
+              <label for="editAvatarInput" class="btn btn-secondary btn-sm" style="cursor: pointer;">
+                <i class="fa-solid fa-upload"></i> Upload Avatar
+              </label>
+              <input type="file" id="editAvatarInput" accept="image/*" style="display: none;">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editName">Full Name</label>
+            <input type="text" id="editName" value="Sarah Jenkins" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editUsername">Username</label>
+            <input type="text" id="editUsername" value="sarahj" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editBio">Bio</label>
+            <textarea id="editBio" rows="3">Senior Product Designer & Frontend Developer. Passionate about building minimal, elegant web interfaces and open-source tools. 🚀</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editLocation">Location</label>
+            <input type="text" id="editLocation" value="San Francisco, CA">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editWebsite">Website</label>
+            <input type="url" id="editWebsite" value="https://sarahjenkins.dev">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelEditModalBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Followers / Following List Modal -->
+  <div class="modal-backdrop" id="followListModal">
+    <div class="modal-dialog" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3 id="followListModalTitle" style="font-size: 1.1rem;">Followers</h3>
+        <button class="remove-img-btn" id="closeFollowListModalBtn" style="position: static; width: 28px; height: 28px;">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="followListModalBody">
+        <div class="notif-empty">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post Detail Modal -->
+  <div class="modal-backdrop" id="postDetailModal">
+    <div class="modal-dialog" style="max-width: 620px; width: 95%;">
+      <div class="modal-header" style="padding: 12px 18px;">
+        <div class="post-author" id="modalPostAuthor">
+          <img src="" alt="Author" class="avatar avatar-sm" id="modalPostAvatar">
+          <div>
+            <div class="font-bold text-sm" id="modalPostAuthorName"></div>
+            <div class="text-xs text-muted" id="modalPostMeta"></div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn btn-outline btn-sm text-danger" id="modalPostDeleteBtn" style="display: none;">
+            <i class="fa-regular fa-trash-can"></i> Delete
+          </button>
+          <button class="remove-img-btn" id="closePostDetailModalBtn" style="position: static; width: 30px; height: 30px;">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body" style="padding: 16px; max-height: 80vh; overflow-y: auto;">
+        <!-- Post Media -->
+        <div id="modalPostMediaWrap" style="display: none; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 14px; max-height: 420px; background: var(--bg-hover); text-align: center;">
+          <img id="modalPostImage" src="" alt="Post image" style="width: 100%; max-height: 420px; object-fit: contain;">
+        </div>
+
+        <!-- Post Text -->
+        <div id="modalPostContent" style="font-size: 0.975rem; line-height: 1.5; margin-bottom: 14px; word-break: break-word; color: var(--text-main);"></div>
+
+        <!-- Post Stats & Actions -->
+        <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 8px 0; margin-bottom: 12px; font-size: 0.85rem; color: var(--text-muted);">
+          <div>
+            <i class="fa-solid fa-heart text-danger"></i>
+            <span id="modalPostLikesCount">0</span> likes
+          </div>
+          <div>
+            <span id="modalPostCommentsCount">0</span> comments
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+          <button class="action-btn" id="modalPostLikeBtn" style="flex: 1;">
+            <i class="fa-regular fa-heart"></i>
+            <span>Like</span>
+          </button>
+          <button class="action-btn" id="modalPostSaveBtn" style="flex: 1;">
+            <i class="fa-regular fa-bookmark"></i>
+            <span>Save</span>
+          </button>
+          <button class="action-btn" id="modalPostShareBtn" style="flex: 1;">
+            <i class="fa-regular fa-share-from-square"></i>
+            <span>Share</span>
+          </button>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="font-bold text-sm" style="margin-bottom: 10px;">Comments</div>
+
+        <div class="add-comment-box" style="margin-bottom: 14px;">
+          <img src="" class="avatar avatar-sm current-user-avatar">
+          <input type="text" id="modalCommentInput" placeholder="Write a comment...">
+          <button class="btn btn-primary btn-sm" id="modalCommentSubmitBtn">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+
+        <div class="comment-list" id="modalCommentsList">
+          <!-- Injected comments -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/socket.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/feed.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeAlpha - Connect & Share</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-share-nodes"></i>
+        </div>
+        <span>CodeAlpha</span>
+      </a>
+    </div>
+
+    <div class="nav-center">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search people or posts...">
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <div class="user-dropdown">
+        <button class="nav-icon-btn" id="notifBtn" title="Notifications">
+          <i class="fa-regular fa-bell"></i>
+          <span class="dot-badge" id="notifDot" style="display:none;"></span>
+        </button>
+        <div class="dropdown-menu notif-dropdown" id="notifDropdownMenu">
+          <div class="dropdown-header d-flex align-items-center justify-content-between" style="display:flex; align-items:center; justify-content:space-between;">
+            <span class="font-bold">Notifications</span>
+            <span class="text-xs text-accent" id="markAllReadBtn" style="cursor:pointer;">Mark all read</span>
+          </div>
+          <div id="notifList" class="notif-list">
+            <div class="notif-empty">No notifications yet</div>
+          </div>
+        </div>
+      </div>
+
+      <a href="chat.html" class="nav-icon-btn" id="msgBtn" title="Messages">
+        <i class="fa-regular fa-paper-plane"></i>
+        <span class="dot-badge" id="msgDot" style="display:none;"></span>
+      </a>
+
+      <button class="nav-icon-btn" id="themeToggleBtn" title="Toggle Dark Mode">
+        <i class="fa-regular fa-moon"></i>
+      </button>
+
+      <!-- Profile Avatar & Dropdown -->
+      <div class="user-dropdown">
+        <button class="profile-trigger" id="profileDropdownBtn">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar" class="avatar avatar-sm current-user-avatar">
+          <i class="fa-solid fa-chevron-down text-xs text-muted"></i>
+        </button>
+        <div class="dropdown-menu" id="profileDropdownMenu">
+          <div class="dropdown-header">
+            <div class="font-bold current-user-name">Sarah Jenkins</div>
+            <div class="text-xs text-muted current-user-handle">@sarahj</div>
+          </div>
+          <a href="profile.html" class="dropdown-item">
+            <i class="fa-regular fa-user"></i> View Profile
+          </a>
+          <a href="create-post.html" class="dropdown-item">
+            <i class="fa-regular fa-pen-to-square"></i> New Post
+          </a>
+          <a href="#" class="dropdown-item" id="menuToggleDark">
+            <i class="fa-regular fa-moon"></i> Switch Theme
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item text-muted" id="logoutBtn">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App Layout Grid -->
+  <div class="app-container">
+    
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link active">
+          <i class="fa-solid fa-house"></i>
+          <span>Home</span>
+        </a>
+        <a href="explore.html" class="nav-link" id="navExplore">
+          <i class="fa-regular fa-compass"></i>
+          <span>Explore</span>
+        </a>
+        <a href="notifications.html" class="nav-link" id="navNotifications">
+          <i class="fa-regular fa-bell"></i>
+          <span>Notifications</span>
+        </a>
+        <a href="chat.html" class="nav-link" id="navMessages">
+          <i class="fa-regular fa-envelope"></i>
+          <span>Messages</span>
+        </a>
+        <a href="profile.html" class="nav-link">
+          <i class="fa-regular fa-user"></i>
+          <span>Profile</span>
+        </a>
+        <a href="saved.html" class="nav-link" id="navSaved">
+          <i class="fa-regular fa-bookmark"></i>
+          <span>Saved</span>
+        </a>
+        <a href="create-post.html" class="btn btn-primary btn-full mt-4" style="margin-top: 16px;">
+          <i class="fa-solid fa-plus"></i> Create Post
+        </a>
+      </nav>
+
+      <div class="sidebar-user">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="User" class="avatar avatar-sm current-user-avatar">
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name current-user-name">Sarah Jenkins</div>
+          <div class="sidebar-user-handle current-user-handle">@sarahj</div>
+        </div>
+        <i class="fa-solid fa-ellipsis-vertical text-muted"></i>
+      </div>
+    </aside>
+
+    <!-- Center Feed Area -->
+    <main class="feed-area">
+
+      <!-- Create Post Composer Card -->
+      <div class="card create-post-card">
+        <div class="create-post-input-group">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="User Avatar" class="avatar current-user-avatar">
+          <textarea class="create-post-textarea" id="postInputText" placeholder="What's on your mind?"></textarea>
+        </div>
+
+        <!-- Image Upload Preview Zone -->
+        <div class="image-preview-container" id="imagePreviewBox">
+          <img id="imagePreviewSrc" src="" alt="Post Preview">
+          <button class="remove-img-btn" id="removeImgBtn">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="create-post-actions">
+          <div class="post-options">
+            <label class="option-btn" style="cursor: pointer;">
+              <i class="fa-regular fa-image" style="color: #10b981;"></i> Photo
+              <input type="file" id="postFileInput" accept="image/*" style="display: none;">
+            </label>
+            <div class="popover-wrap">
+              <button class="option-btn" id="emojiBtn" type="button">
+                <i class="fa-regular fa-face-smile" style="color: #f59e0b;"></i> Feeling
+              </button>
+              <div class="feeling-popover" id="feelingPopover">
+                <div class="popover-title">How are you feeling?</div>
+                <div class="feeling-grid" id="feelingGrid"></div>
+              </div>
+            </div>
+            <div class="popover-wrap">
+              <button class="option-btn" id="tagBtn" type="button">
+                <i class="fa-solid fa-hashtag" style="color: #6366f1;"></i> Tag
+              </button>
+              <div class="tag-popover" id="tagPopover">
+                <div class="popover-title">Add a hashtag</div>
+                <div class="tag-input-row">
+                  <input type="text" id="tagInputField" placeholder="e.g. webdev" maxlength="24">
+                  <button class="btn btn-primary btn-sm" id="tagAddBtn" type="button">Add</button>
+                </div>
+                <div class="tag-chip-list" id="tagChipList"></div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="publishPostBtn">
+            <span>Post</span>
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Feed Filter Tabs -->
+      <div class="d-flex align-items-center justify-content-between mb-4" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 1.1rem;">Your Feed</h3>
+        <div style="font-size: 0.875rem; color: var(--text-muted); display: flex; gap: 12px;">
+          <span style="font-weight: 700; color: var(--accent); cursor: pointer;">Latest</span>
+          <span style="cursor: pointer;">Popular</span>
+        </div>
+      </div>
+
+      <!-- Feed Posts Container -->
+      <div id="postsFeedContainer">
+        <!-- Dynamic Posts Render Here -->
+      </div>
+
+    </main>
+
+    <!-- Right Sidebar -->
+    <aside class="right-sidebar">
+      
+      <!-- Suggested For You Card -->
+      <div class="card">
+        <div class="widget-title">
+          <span>Suggested for you</span>
+          <a href="#" class="text-xs text-accent">See All</a>
+        </div>
+        <div id="suggestedUsersContainer">
+          <!-- Dynamic Suggested Users Render Here -->
+        </div>
+      </div>
+
+      <!-- Trending Topics Card -->
+      <div class="card">
+        <div class="widget-title">
+          <span>Trending Topics</span>
+          <i class="fa-solid fa-fire text-accent"></i>
+        </div>
+        <div class="trending-list">
+          <div class="trending-item">
+            <div class="trending-category">Technology • Trending</div>
+            <a href="explore.html?tag=WebDevelopment" class="trending-tag">#WebDevelopment</a>
+            <div class="trending-count">24.5K posts</div>
+          </div>
+          <div class="trending-item">
+            <div class="trending-category">Design • Trending</div>
+            <a href="explore.html?tag=UIUXDesign" class="trending-tag">#UIUXDesign</a>
+            <div class="trending-count">18.2K posts</div>
+          </div>
+          <div class="trending-item">
+            <div class="trending-category">Software • Trending</div>
+            <a href="explore.html?tag=JavaScript" class="trending-tag">#JavaScript</a>
+            <div class="trending-count">42.8K posts</div>
+          </div>
+          <div class="trending-item">
+            <div class="trending-category">Creativity • Trending</div>
+            <a href="explore.html?tag=Photography" class="trending-tag">#Photography</a>
+            <div class="trending-count">12.1K posts</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Links -->
+      <div class="widget-footer">
+        <a href="#">About</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Help</a>
+        <div style="margin-top: 4px;">&copy; 2026 Connectly Inc.</div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item active">
+      <i class="fa-solid fa-house"></i>
+    </a>
+    <a href="explore.html" class="bottom-nav-item">
+      <i class="fa-regular fa-compass"></i>
+    </a>
+    <a href="create-post.html" class="bottom-nav-item text-accent">
+      <i class="fa-solid fa-square-plus" style="font-size: 1.5rem;"></i>
+    </a>
+    <a href="chat.html" class="bottom-nav-item">
+      <i class="fa-regular fa-paper-plane"></i>
+    </a>
+    <a href="profile.html" class="bottom-nav-item">
+      <i class="fa-regular fa-user"></i>
+    </a>
+  </nav>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- JavaScript Scripts -->
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/socket.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/feed.js"></script>
+</body>
+</html>

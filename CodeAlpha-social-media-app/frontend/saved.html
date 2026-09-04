@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Posts - CodeAlpha</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-share-nodes"></i>
+        </div>
+        <span>CodeAlpha</span>
+      </a>
+    </div>
+
+    <div class="nav-center">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="navbarSearchInput" placeholder="Search people or posts...">
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <div class="user-dropdown">
+        <button class="nav-icon-btn" id="notifBtn" title="Notifications">
+          <i class="fa-regular fa-bell"></i>
+          <span class="dot-badge" id="notifDot" style="display:none;"></span>
+        </button>
+        <div class="dropdown-menu notif-dropdown" id="notifDropdownMenu">
+          <div class="dropdown-header d-flex align-items-center justify-content-between" style="display:flex; align-items:center; justify-content:space-between;">
+            <span class="font-bold">Notifications</span>
+            <span class="text-xs text-accent" id="markAllReadBtn" style="cursor:pointer;">Mark all read</span>
+          </div>
+          <div id="notifList" class="notif-list">
+            <div class="notif-empty">No notifications yet</div>
+          </div>
+        </div>
+      </div>
+
+      <a href="chat.html" class="nav-icon-btn" id="msgBtn" title="Messages">
+        <i class="fa-regular fa-paper-plane"></i>
+        <span class="dot-badge" id="msgDot" style="display:none;"></span>
+      </a>
+
+      <button class="nav-icon-btn" id="themeToggleBtn" title="Toggle Dark Mode">
+        <i class="fa-regular fa-moon"></i>
+      </button>
+
+      <!-- Profile Avatar & Dropdown -->
+      <div class="user-dropdown">
+        <button class="profile-trigger" id="profileDropdownBtn">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar" class="avatar avatar-sm current-user-avatar">
+          <i class="fa-solid fa-chevron-down text-xs text-muted"></i>
+        </button>
+        <div class="dropdown-menu" id="profileDropdownMenu">
+          <div class="dropdown-header">
+            <div class="font-bold current-user-name">Sarah Jenkins</div>
+            <div class="text-xs text-muted current-user-handle">@sarahj</div>
+          </div>
+          <a href="profile.html" class="dropdown-item">
+            <i class="fa-regular fa-user"></i> View Profile
+          </a>
+          <a href="create-post.html" class="dropdown-item">
+            <i class="fa-regular fa-pen-to-square"></i> New Post
+          </a>
+          <a href="#" class="dropdown-item" id="menuToggleDark">
+            <i class="fa-regular fa-moon"></i> Switch Theme
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item text-muted" id="logoutBtn">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App Layout Grid -->
+  <div class="app-container">
+    
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Home</span>
+        </a>
+        <a href="explore.html" class="nav-link" id="navExplore">
+          <i class="fa-regular fa-compass"></i>
+          <span>Explore</span>
+        </a>
+        <a href="notifications.html" class="nav-link" id="navNotifications">
+          <i class="fa-regular fa-bell"></i>
+          <span>Notifications</span>
+        </a>
+        <a href="chat.html" class="nav-link" id="navMessages">
+          <i class="fa-regular fa-envelope"></i>
+          <span>Messages</span>
+        </a>
+        <a href="profile.html" class="nav-link">
+          <i class="fa-regular fa-user"></i>
+          <span>Profile</span>
+        </a>
+        <a href="saved.html" class="nav-link active" id="navSaved">
+          <i class="fa-solid fa-bookmark"></i>
+          <span>Saved</span>
+        </a>
+        <a href="create-post.html" class="btn btn-primary btn-full mt-4" style="margin-top: 16px;">
+          <i class="fa-solid fa-plus"></i> Create Post
+        </a>
+      </nav>
+
+      <div class="sidebar-user">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="User" class="avatar avatar-sm current-user-avatar">
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name current-user-name">Sarah Jenkins</div>
+          <div class="sidebar-user-handle current-user-handle">@sarahj</div>
+        </div>
+        <i class="fa-solid fa-ellipsis-vertical text-muted"></i>
+      </div>
+    </aside>
+
+    <!-- Center Saved Posts Area -->
+    <main class="feed-area">
+
+      <!-- Header Card -->
+      <div class="card page-header-card">
+        <div class="page-header-title-row">
+          <div class="page-title">
+            <i class="fa-solid fa-bookmark text-accent"></i>
+            <span>Saved Bookmarks</span>
+            <span class="badge badge-primary" id="savedCountBadge">0 items</span>
+          </div>
+          <div class="page-actions-group">
+            <div class="view-mode-toggle">
+              <button class="view-mode-btn active" id="viewModeListBtn" title="List View">
+                <i class="fa-solid fa-list"></i> Feed
+              </button>
+              <button class="view-mode-btn" id="viewModeGridBtn" title="Grid View">
+                <i class="fa-solid fa-border-all"></i> Grid
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls: Search & Filter Pills -->
+        <div class="saved-controls-bar">
+          <div class="saved-search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="savedFilterSearch" placeholder="Search your saved posts...">
+          </div>
+
+          <div class="filter-pills-bar" id="savedFilterPills">
+            <button class="filter-pill active" data-filter="all">
+              <i class="fa-solid fa-layer-group"></i> All Saved
+            </button>
+            <button class="filter-pill" data-filter="media">
+              <i class="fa-regular fa-image"></i> Photos & Media
+            </button>
+            <button class="filter-pill" data-filter="text">
+              <i class="fa-solid fa-align-left"></i> Text Only
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saved Posts Dynamic Container -->
+      <div id="savedPostsContainer">
+        <!-- Dynamic Posts or Grid Rendered Here -->
+      </div>
+
+    </main>
+
+    <!-- Right Sidebar -->
+    <aside class="right-sidebar">
+      
+      <!-- Suggested For You Card -->
+      <div class="card">
+        <div class="widget-title">
+          <span>Suggested for you</span>
+          <a href="explore.html" class="text-xs text-accent">See All</a>
+        </div>
+        <div id="suggestedUsersContainer">
+          <!-- Dynamic Suggested Users Render Here -->
+        </div>
+      </div>
+
+      <!-- Trending Topics Card -->
+      <div class="card">
+        <div class="widget-title">
+          <span>Trending Topics</span>
+          <i class="fa-solid fa-fire text-accent"></i>
+        </div>
+        <div class="trending-list">
+          <div class="trending-item">
+            <div class="trending-category">Technology • Trending</div>
+            <a href="explore.html?tag=WebDevelopment" class="trending-tag">#WebDevelopment</a>
+            <div class="trending-count">24.5K posts</div>
+          </div>
+          <div class="trending-item">
+            <div class="trending-category">Design • Trending</div>
+            <a href="explore.html?tag=UIUXDesign" class="trending-tag">#UIUXDesign</a>
+            <div class="trending-count">18.2K posts</div>
+          </div>
+          <div class="trending-item">
+            <div class="trending-category">Software • Trending</div>
+            <a href="explore.html?tag=JavaScript" class="trending-tag">#JavaScript</a>
+            <div class="trending-count">42.8K posts</div>
+          </div>
+          <div class="trending-item">
+            <div class="trending-category">Creativity • Trending</div>
+            <a href="explore.html?tag=Photography" class="trending-tag">#Photography</a>
+            <div class="trending-count">12.1K posts</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Links -->
+      <div class="widget-footer">
+        <a href="#">About</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Help</a>
+        <div style="margin-top: 4px;">&copy; 2026 Connectly Inc.</div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item">
+      <i class="fa-solid fa-house"></i>
+    </a>
+    <a href="explore.html" class="bottom-nav-item">
+      <i class="fa-regular fa-compass"></i>
+    </a>
+    <a href="create-post.html" class="bottom-nav-item text-accent">
+      <i class="fa-solid fa-square-plus" style="font-size: 1.5rem;"></i>
+    </a>
+    <a href="chat.html" class="bottom-nav-item">
+      <i class="fa-regular fa-paper-plane"></i>
+    </a>
+    <a href="profile.html" class="bottom-nav-item">
+      <i class="fa-regular fa-user"></i>
+    </a>
+  </nav>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- JavaScript Scripts -->
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/socket.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/saved.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Post - CodeAlpha</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-share-nodes"></i>
+        </div>
+        <span>CodeAlpha</span>
+      </a>
+    </div>
+
+    <div class="nav-right">
+      <a href="index.html" class="btn btn-secondary btn-sm">
+        <i class="fa-solid fa-xmark"></i> Cancel
+      </a>
+    </div>
+  </header>
+
+  <!-- App Layout Container -->
+  <div class="app-container single-col">
+    
+    <div class="card" style="max-width: 680px; margin: 0 auto; padding: var(--space-6);">
+      <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 20px;">
+        <h2 style="font-size: 1.25rem;">Create a New Post</h2>
+        <span class="badge badge-primary">Public</span>
+      </div>
+
+      <form id="dedicatedPostForm">
+        <!-- User Info Row -->
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar" class="avatar current-user-avatar">
+          <div>
+            <div class="font-bold current-user-name" style="font-size: 0.95rem;">Sarah Jenkins</div>
+            <div class="text-xs text-muted current-user-handle">@sarahj</div>
+          </div>
+        </div>
+
+        <!-- Post Content Textarea -->
+        <div class="form-group">
+          <textarea id="dedicatedPostText" class="create-post-textarea" placeholder="What would you like to share today? Express thoughts, ask questions, or share project updates..." style="min-height: 140px; font-size: 1.05rem;" required></textarea>
+        </div>
+
+        <!-- File Upload Drag Zone / Drop Box -->
+        <div class="form-group">
+          <label style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 8px;">Upload Image</label>
+
+          <div id="dropZone" style="border: 2px dashed var(--border); border-radius: var(--radius-md); padding: 32px 16px; text-align: center; background-color: var(--bg-hover); cursor: pointer; transition: border-color 0.2s ease;">
+            <i class="fa-regular fa-image text-accent" style="font-size: 2.5rem; margin-bottom: 12px;"></i>
+            <div class="font-semibold" style="margin-bottom: 4px;">Click to select an image, or drag & drop</div>
+            <div class="text-xs text-muted">Supports JPG, PNG, WEBP up to 5MB</div>
+            <input type="file" id="dedicatedFileInput" accept="image/*" style="display: none;">
+          </div>
+
+          <!-- Uploaded Image Preview Box -->
+          <div class="image-preview-container" id="dedicatedPreviewBox" style="margin-top: 16px;">
+            <img id="dedicatedPreviewSrc" src="" alt="Post Preview">
+            <button type="button" class="remove-img-btn" id="dedicatedRemoveImgBtn">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit Bar -->
+        <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 16px; margin-top: 24px;">
+          <a href="index.html" class="btn btn-secondary">Cancel</a>
+          <button type="submit" class="btn btn-primary btn-lg" id="submitPostBtn">
+            <span>Publish Post</span>
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/post.js"></script>
+</body>
+</html>
